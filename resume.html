@@ -2,29 +2,35 @@
 <title>Resume — Coach Derek Kief</title><meta name="description" content="Coaching and playing resume of Derek Kief.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"></head><body>
-<nav><a class="logo" href="index.html">DK<b>.</b>COM</a><div><a href="index.html">Home</a><a href="resume.html" class="on">Resume</a><a href="index.html#recruiting">Recruiting</a><a href="index.html#training">Training</a></div></nav>
+<nav><a class="logo" href="index.html">COACHKIEF<b>.</b>COM</a><div><a href="index.html">Home</a><a href="resume.html" class="on">Resume</a><a href="index.html#recruiting">Recruiting</a><a href="index.html#training">Training</a></div></nav>
 
-<header class="page-hero ph" style="--img:url(img/resume-hero.jpg)" data-label="img/resume-hero.jpg"><div class="wrap">
-  <p class="tag">Coaching Resume</p><h1>The Path</h1>
+<header class="page-hero ph" style="--img:url(img/resume_header.jpg);--pos:50% 12%"><div class="wrap">
+  <h1>Resume</h1>
+  <!-- career path: school logos in order, joined by short lines; each links to its entry below -->
+  <div class="path">
+    <a href="#bama"><i style="--img:url(img/alabama_logo.webp)"></i>2014</a>
+    <a href="#md20"><i style="--img:url(img/maryland_logo.svg)"></i>2020</a>
+    <a href="#towson"><i style="--img:url(img/towson_logo.webp)"></i>2022</a>
+    <a href="#ark"><i style="--img:url(img/arkansas_logo.png)"></i>2023</a>
+    <a href="#nyg"><i style="--img:url(img/giants_logo.webp)"></i>2024</a>
+    <a href="#md24"><i style="--img:url(img/maryland_logo.svg)"></i>2024–Now</a>
+  </div>
 </div></header>
 
 <section style="padding-top:40px"><div class="wrap">
-  <!-- one .stop per job, newest first. VERIFY: years/titles drawn from public school bios; add Missouri State if confirmed -->
-  <div class="stop"><div class="yr">2025–</div><div><h3>Maryland</h3><p class="role">Assistant Wide Receivers Coach</p><ul><li>Promoted to on-field staff under Head Coach Mike Locksley</li></ul></div><div class="ph" style="--img:url(img/maryland.jpg)" data-label="maryland.jpg"></div></div>
-  <div class="stop"><div class="yr">2024</div><div><h3>Maryland</h3><p class="role">Offensive Analyst</p><ul><li>Worked with a WR room featuring AP All-American Tai Felton, the Big Ten's regular-season leader in catches and yards</li></ul></div><div class="ph" style="--img:url(img/maryland-2.jpg)" data-label="maryland-2.jpg"></div></div>
-  <div class="stop"><div class="yr">2023</div><div><h3>Arkansas</h3><p class="role">Senior Quality Control — Offense</p><ul><li>SEC offensive staff</li></ul></div><div class="ph" style="--img:url(img/arkansas.jpg)" data-label="arkansas.jpg"></div></div>
-  <div class="stop"><div class="yr">2022</div><div><h3>Towson</h3><p class="role">Wide Receivers Coach</p><ul><li>First full-time position coaching job (FCS / CAA)</li></ul></div><div class="ph" style="--img:url(img/towson.jpg)" data-label="towson.jpg"></div></div>
-  <div class="stop"><div class="yr">2020–21</div><div><h3>Maryland</h3><p class="role">Graduate Assistant</p><ul><li>Joined Mike Locksley's first Terps staffs</li></ul></div><div class="ph" style="--img:url(img/maryland-ga.jpg)" data-label="maryland-ga.jpg"></div></div>
+  <!-- one .stop per job, newest first: team plate (logo on team colors) left, details middle, player he coached right.
+       Player photo: save in img/players/, point the figure's --img at it and edit the name in its <figcaption>; delete the <figure> to leave the slot empty. Plate colors: .t-* in style.css. VERIFY: years/titles drawn from public school bios; add Missouri State if confirmed -->
+  <div class="stop" id="md25"><div class="plate t-md" role="img" aria-label="Maryland logo" style="--img:url(img/resume_logos/maryland_white.svg)"></div><div><div class="yr">2025–Present</div><h3>Maryland</h3><p class="role">Assistant Wide Receivers Coach</p></div><figure class="player ph" style="--img:url(img/players/chris_durr.webp)"><figcaption>Chris Durr</figcaption></figure></div>
+  <div class="stop" id="md24"><div class="plate t-md" role="img" aria-label="Maryland logo" style="--img:url(img/resume_logos/maryland_white.svg)"></div><div><div class="yr">2024</div><h3>Maryland</h3><p class="role">Offensive Analyst</p></div><figure class="player ph" style="--img:url(img/players/tai_felton.webp);--pos:35% 50%"><figcaption>Tai Felton</figcaption></figure></div>
+  <div class="stop" id="nyg"><div class="plate t-nyg" role="img" aria-label="New York Giants logo" style="--img:url(img/resume_logos/giants_white.png)"></div><div><div class="yr">2024</div><h3>New York Giants</h3><p class="role">Coaching Fellow</p></div><figure class="player ph" style="--img:url(img/players/malik_nabers.webp)"><figcaption>Malik Nabers</figcaption></figure></div>
+  <div class="stop" id="ark"><div class="plate t-ark" role="img" aria-label="Arkansas logo" style="--img:url(img/resume_logos/arkansas_white.png)"></div><div><div class="yr">2023</div><h3>Arkansas</h3><p class="role">Senior Quality Control — Offense</p></div><figure class="player ph" style="--img:url(img/players/isaac_teslaa.webp);--pos:60% 50%"><figcaption>Isaac TeSlaa</figcaption></figure></div>
+  <div class="stop" id="towson"><div class="plate t-tow" role="img" aria-label="Towson logo" style="--img:url(img/towson_logo.webp)"></div><div><div class="yr">2022</div><h3>Towson</h3><p class="role">Wide Receivers Coach</p></div><figure class="player ph" style="--img:url(img/players/dakendall_james.webp);--pos:45% 50%"><figcaption>DaKendall James</figcaption></figure></div>
+  <div class="stop" id="md20"><div class="plate t-md" role="img" aria-label="Maryland logo" style="--img:url(img/resume_logos/maryland_white.svg)"></div><div><div class="yr">2020–21</div><h3>Maryland</h3><p class="role">Graduate Assistant</p></div><figure class="player ph" style="--img:url(img/players/rakim_jarett.jpg);--pos:55% 50%"><figcaption>Rakim Jarrett</figcaption></figure></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <p class="tag">Playing Career</p><h2>Alabama<br>2014–2018</h2>
-  <div class="stop"><div class="yr">WR</div><div><h3>Crimson Tide</h3><p class="role">Wide Receiver · Cincinnati, OH native</p><ul><li>Five seasons at Alabama, the final three coached by Mike Locksley</li></ul></div><div class="ph" style="--img:url(img/alabama.jpg)" data-label="alabama.jpg"></div></div>
-  <div class="mosaic" style="margin-top:30px">
-    <div class="ph w" style="--img:url(img/play1.jpg)" data-label="play1"></div>
-    <div class="ph" style="--img:url(img/play2.jpg)" data-label="play2"></div>
-    <div class="ph" style="--img:url(img/play3.jpg)" data-label="play3"></div>
-  </div>
+  <div class="stop" id="bama"><div class="plate t-bama" role="img" aria-label="Alabama logo" style="--img:url(img/alabama_logo.webp)"></div><div><div class="yr">WR</div><h3>Crimson Tide</h3><p class="role">Wide Receiver · Cincinnati, OH native</p></div><figure class="player ph" style="--img:url(img/players/derek_kief.JPG);--pos:55% 30%" role="img" aria-label="Derek Kief at Alabama"></figure></div>
 </div></section>
 
 <footer><div class="wrap"><span>© Coach Derek Kief</span><span>Cincinnati, OH · Coach · Recruiter · Trainer</span></div></footer>

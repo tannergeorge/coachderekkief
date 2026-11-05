@@ -24,7 +24,7 @@ nav div{display:flex;gap:2px;padding:4px;font-size:.8rem;font-weight:600;letter-
 nav div a{min-height:44px;display:flex;align-items:center;padding:0 18px;border-radius:999px;transition:transform .35s var(--ease),background .2s}
 nav div a:hover{background:#ffffff14}
 nav div a.on{background:#ffffff29;color:var(--hot);box-shadow:inset 0 1px 0 #fff4}
-@media(max-width:640px){nav div{font-size:.75rem}nav div a{padding:0 11px}nav div a:first-child{display:none}}
+@media(max-width:640px){nav{inset:12px 10px auto}nav .logo{font-size:1rem;padding:14px 12px}nav div{font-size:.7rem}nav div a{padding:0 8px}nav div a:first-child{display:none}}
 
 /* photo = background so a missing file falls back to the gradient (no broken-image icon) */
 .ph{background:var(--img,none) var(--pos,center)/cover,linear-gradient(135deg,#1d1d1d,#2c2c2c);position:relative;overflow:hidden}
@@ -92,21 +92,46 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .social a:hover{transform:translateY(-4px);border-color:transparent;color:var(--t,#fff)}
 .social a:hover::before{opacity:1}.social a:hover span{color:inherit;opacity:.8}.social a:hover::after{transform:translate(4px,-4px)}
 
-/* photo mosaic: drop more .ph tiles in, grid flows */
-.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:10px}
-.mosaic>*,.stop .ph{border-radius:20px}
-.mosaic .w{grid-column:span 2}.mosaic .t{grid-row:span 2}
-@media(max-width:760px){.mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}}
 
 /* resume timeline */
-.page-hero{min-height:62vh;display:flex;align-items:flex-end;padding-bottom:50px}
+.page-hero{min-height:78vh;display:flex;align-items:flex-end;padding-bottom:50px}
 .page-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg),#0008 70%)}
 .page-hero .wrap{position:relative;width:100%}.page-hero h1{font-size:clamp(4rem,14vw,10rem)}
-.stop{display:grid;grid-template-columns:150px 1fr 300px;gap:30px;padding:44px 0;border-top:1px solid var(--line);align-items:start}
-.stop .yr{font:2.2rem Anton,sans-serif;-webkit-text-stroke-width:1px}
+.stop{display:grid;grid-template-columns:minmax(0,340px) 1fr 190px;gap:clamp(24px,5vw,56px);padding:44px 0;border-top:1px solid var(--line);align-items:center}
+.stop .yr{font:1.9rem Anton,sans-serif;-webkit-text-stroke-width:1px;margin-bottom:6px}
 .stop h3{font-size:2.4rem}.stop .role{font-weight:600;margin:8px 0 10px}.stop ul{color:#c4c4c4;padding-left:18px}
-.stop .ph{aspect-ratio:4/3}
-@media(max-width:860px){.stop{grid-template-columns:1fr;gap:12px}}
+/* team plate: logo on a sleek background in the team's own colors (white alt logos from img/resume_logos where available) (base gradient + color glow + sheen),
+   with a large faint watermark of the logo bleeding off the corner. Logo layers are unrounded squares so nothing is cropped. */
+.plate{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:22px;background:linear-gradient(115deg,#0000 38%,#ffffff12 50%,#0000 62%),var(--team);box-shadow:inset 0 1px 0 #ffffff2e,inset 0 0 0 1px #ffffff14,0 22px 44px #0008;transition:transform .45s var(--ease)}
+.plate::before{content:"";position:absolute;inset:-25% -45% -25% 35%;background:var(--img) center/contain no-repeat;opacity:.1;transform:rotate(-14deg)}
+.plate::after{content:"";position:absolute;inset:17% 20%;background:var(--img) center/contain no-repeat;filter:drop-shadow(0 12px 18px #0009);transition:transform .45s var(--ease)}
+.stop:hover .plate{transform:translateY(-4px)}.stop:hover .plate::after{transform:scale(1.06)}
+.t-md{--team:radial-gradient(70% 60% at 0% 0%,#ffd20033,#0000 60%),radial-gradient(90% 80% at 100% 100%,#0000008c,#0000 60%),linear-gradient(135deg,#e21833,#8e0c1d)}
+.t-nyg{--team:radial-gradient(90% 80% at 100% 100%,#a71930a6,#0000 60%),radial-gradient(70% 60% at 0% 0%,#ffffff1a,#0000 60%),linear-gradient(135deg,#0b2265,#050f33)}
+.t-ark{--team:radial-gradient(70% 60% at 0% 0%,#ffffff1f,#0000 60%),radial-gradient(90% 80% at 100% 100%,#0000008c,#0000 60%),linear-gradient(135deg,#9d2235,#4f0d18)}
+.t-ark::after{inset:15% 10%}/* wide hog: use more of the panel width */
+.t-tow{--team:radial-gradient(90% 80% at 100% 100%,#ffbb0080,#0000 60%),radial-gradient(60% 50% at 0% 0%,#ffffff1a,#0000 60%),linear-gradient(135deg,#1c1a14,#060504)}
+.t-bama{--team:radial-gradient(70% 60% at 0% 0%,#ffffff26,#0000 60%),radial-gradient(90% 80% at 100% 100%,#2b0509b3,#0000 60%),linear-gradient(135deg,#a31f36,#5a0d1a)}
+/* player he coached at that stop: portrait photo, name over a bottom fade */
+.player{margin:0;aspect-ratio:3/4;border-radius:20px;display:flex;align-items:flex-end;box-shadow:0 20px 40px #0007;transition:transform .45s var(--ease)}
+.player::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000d,#0000 55%)}
+.player:empty::before{content:none}/* no caption = no dark fade */
+.player figcaption{position:relative;padding:14px 16px;font:1.35rem/1 Anton,sans-serif;text-transform:uppercase}
+.stop:hover .player{transform:translateY(-4px)}
+.stop{scroll-margin-top:90px}
+
+/* career path in the resume hero */
+.path{--s:88px;--g:clamp(14px,4vw,48px);display:flex;gap:var(--g);width:max-content;max-width:100%;margin-top:34px}
+.path a{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:.8rem;font-weight:600;color:#ddd}
+/* light circle behind each logo. The logo sits on its own square layer (::before) inset inside the circle:
+   clipping it to the rounded content-box would round that box too and shave the logo's corners */
+.path i{position:relative;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff,#e4e4e0);box-shadow:0 0 0 4px #0006,0 14px 30px #000a;transition:transform .35s var(--ease)}
+.path i::before{content:"";position:absolute;inset:17%;background:var(--img) center/contain no-repeat}
+.path a:not(:last-child)::after{content:"";position:absolute;top:calc(var(--s)/2);left:calc(100% + 6px);width:calc(var(--g) - 12px);height:2px;border-radius:2px;background:linear-gradient(90deg,#fff5,var(--hot))}
+.path a:hover i{transform:scale(1.12)}
+@media(max-width:560px){.path{--s:48px;--g:10px}}
+@media(max-width:1000px){.stop{grid-template-columns:minmax(0,280px) 1fr 150px}}
+@media(max-width:760px){.stop{grid-template-columns:1fr;gap:20px}.player{width:min(220px,60%)}}
 
 footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
