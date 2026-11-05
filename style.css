@@ -1,0 +1,116 @@
+/* ponytail: one hand-written stylesheet, no framework/build; split per page if it passes ~400 lines */
+:root{--bg:#0a0a0a;--fg:#f4f4f4;--mute:#a3a3a3;--line:#ffffff1a;--hot:#d4ff00;--ease:cubic-bezier(.3,1.6,.5,1);--sys:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--sys);-webkit-font-smoothing:antialiased}
+a,button{color:inherit;text-decoration:none;font:inherit}
+:focus-visible{outline:2px solid var(--hot);outline-offset:3px;border-radius:999px}
+h1,h2,h3{font-family:Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:.9;font-weight:400}
+.wrap{max-width:1200px;margin:auto;padding:0 20px}
+.tag{color:var(--mute);font-weight:600;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase}
+
+/* liquid glass, per HIG liquid-glass.md: functional layer only (nav, hero controls), never content; few surfaces; one tinted action */
+/* ponytail: blur + specular rim only, no SVG refraction (backdrop-filter:url() is Chromium-only); add it behind @supports if wanted */
+nav .logo,nav div,.btn{background:linear-gradient(#ffffff1f,#ffffff08),#1414148c;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);border:1px solid #ffffff26;border-radius:999px;box-shadow:inset 0 1px 0 #ffffff59,inset 0 -1px 1px #0004,0 10px 30px #0005;transition:transform .35s var(--ease),background .2s}
+.btn:hover{transform:scale(1.04)}
+.btn:active,nav div a:active{transform:scale(.96)}
+/* scroll edge effect: content blurs + fades under the floating nav instead of colliding with it */
+body::before{content:"";position:fixed;inset:0 0 auto;height:96px;z-index:8;pointer-events:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);-webkit-mask:linear-gradient(#000 30%,#0000);mask:linear-gradient(#000 30%,#0000)}
+
+/* nav: one floating glass group, like an iOS 26 tab bar */
+nav{position:fixed;inset:14px 14px auto;z-index:9;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+nav>*{pointer-events:auto}
+nav .logo{font:1.4rem/1 Anton,sans-serif;padding:14px 16px}nav .logo b{color:var(--hot);font-weight:400}
+nav div{display:flex;gap:2px;padding:4px;font-size:.8rem;font-weight:600;letter-spacing:.02em}
+nav div a{min-height:44px;display:flex;align-items:center;padding:0 18px;border-radius:999px;transition:transform .35s var(--ease),background .2s}
+nav div a:hover{background:#ffffff14}
+nav div a.on{background:#ffffff29;color:var(--hot);box-shadow:inset 0 1px 0 #fff4}
+@media(max-width:640px){nav div{font-size:.75rem}nav div a{padding:0 11px}nav div a:first-child{display:none}}
+
+/* photo = background so a missing file falls back to the gradient (no broken-image icon) */
+.ph{background:var(--img,none) var(--pos,center)/cover,linear-gradient(135deg,#1d1d1d,#2c2c2c);position:relative;overflow:hidden}
+.ph:empty::after{content:attr(data-label);position:absolute;inset:auto 12px 10px auto;font-size:.7rem;color:#fff5;letter-spacing:.15em;text-transform:uppercase}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 2%,#0000 55%),linear-gradient(90deg,#000b,#0000 70%)}
+.hero video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
+.hero .wrap{position:relative;width:100%}
+.hero h1{font-size:clamp(4.5rem,17vw,13rem)}
+.hero h1 span,.stop .yr{display:block;color:transparent;-webkit-text-stroke:2px var(--fg)}
+.hero p{max-width:34ch;font-size:1.2rem;color:#e4e4e4;margin:18px 0 28px}
+.btn{display:inline-flex;align-items:center;min-height:50px;font-weight:600;font-size:.95rem;padding:0 26px;margin:0 8px 8px 0}
+.btn:not(.ghost){background:linear-gradient(#e6ff4df2,#c2ec00e6);color:#000;border-color:#efffa0}
+
+/* logo loop: content layer, so no glass; full color; edges fade out; runs forever (no hover pause) */
+.logos{position:relative;margin-top:6vh;padding:30px 0;border-top:1px solid var(--line);overflow:hidden;-webkit-mask:linear-gradient(90deg,#0000,#000 15%,#000 85%,#0000);mask:linear-gradient(90deg,#0000,#000 15%,#000 85%,#0000)}
+.logos div{display:flex;align-items:center;gap:clamp(48px,7vw,96px);width:max-content;padding-right:clamp(48px,7vw,96px);animation:run 40s linear infinite}
+.logos img{height:clamp(34px,4.5vw,52px);width:auto;max-width:120px;object-fit:contain;transition:transform .35s var(--ease)}
+.logos img:hover{transform:scale(1.12)}
+
+/* ticker: the one place brand color is spent loudly */
+.ticker{background:var(--hot);color:#000;overflow:hidden;white-space:nowrap;font:1.4rem Anton,sans-serif;text-transform:uppercase;padding:10px 0;transform:skewY(-1.5deg)}
+.ticker div,.ticker span{display:flex;width:max-content}
+.ticker div{animation:run 60s linear infinite;will-change:transform}
+.ticker b{font-weight:400;padding-right:.6em}
+@keyframes run{to{transform:translateX(-50%)}}
+
+section{padding:110px 0}
+section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
+
+/* page tiles (content layer: no glass) */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.tile{aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;border-radius:28px}
+.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000e,#0000 60%);transition:.3s}
+.tile:hover::before{background:linear-gradient(0deg,#000e,#d4ff0026)}
+.tile>*{position:relative}.tile h3{font-size:2.6rem}
+.tile small{margin-top:12px;font-size:.9rem;font-weight:600;color:#ddd;transition:transform .35s var(--ease)}
+.tile:hover small{transform:translateX(6px)}
+
+/* light panel: off-gray so dark logo marks stay visible */
+.light{background:linear-gradient(#f2f2ef,#e4e4e0);color:#0a0a0a}
+
+/* league collage: tilted, overlapping logos; hover straightens + lifts one to the front.
+   Positions are % of the stage, so it scales; logo is a contained background so a missing file leaves nothing broken */
+.leagues{position:relative;aspect-ratio:2.1;border-radius:28px}
+.lg{position:absolute;left:var(--x);top:var(--y);width:var(--w);aspect-ratio:var(--a);transform:rotate(var(--r));background:var(--img,none) center/contain no-repeat;filter:drop-shadow(0 18px 22px #0003);transition:transform .45s var(--ease),filter .3s}
+.lg:hover{z-index:5;transform:rotate(0) scale(1.08);filter:drop-shadow(0 28px 34px #0004)}
+.nfl{--x:9%;--y:8%;--w:24%;--a:.78;--r:-8deg;z-index:2}
+.b1g{--x:29%;--y:52%;--w:36%;--a:2;--r:5deg;z-index:3}
+.sec{--x:55%;--y:6%;--w:25%;--a:1;--r:9deg;z-index:1}
+.cfp{--x:74%;--y:40%;--w:17%;--a:.77;--r:-7deg;z-index:4;background-size:auto 100%}/* cfp png is mostly transparent padding left/right; size by height */
+@media(max-width:760px){.leagues{aspect-ratio:.95}.nfl{--x:2%;--y:2%;--w:46%}.sec{--x:48%;--y:6%;--w:44%}.b1g{--x:4%;--y:46%;--w:66%}.cfp{--x:58%;--y:58%;--w:34%}}
+
+/* social cards (content layer: no glass); hover fills with the platform color */
+.social{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.social a{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:230px;padding:28px;border-radius:28px;background:#141414;border:1px solid var(--line);transition:transform .35s var(--ease),border-color .3s}
+.social a::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--c);opacity:0;transition:opacity .3s}
+.social a>*{position:relative}
+.social a::after{content:"↗";position:absolute;top:22px;right:26px;font-size:1.5rem;transition:transform .35s var(--ease)}
+.social svg{width:44px;height:44px}
+.social b{display:block;font:400 2.4rem/1 Anton,sans-serif;text-transform:uppercase}
+.social span{color:var(--mute);font-weight:600;transition:color .3s}
+.social a:hover{transform:translateY(-4px);border-color:transparent;color:var(--t,#fff)}
+.social a:hover::before{opacity:1}.social a:hover span{color:inherit;opacity:.8}.social a:hover::after{transform:translate(4px,-4px)}
+
+/* photo mosaic: drop more .ph tiles in, grid flows */
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:10px}
+.mosaic>*,.stop .ph{border-radius:20px}
+.mosaic .w{grid-column:span 2}.mosaic .t{grid-row:span 2}
+@media(max-width:760px){.mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}}
+
+/* resume timeline */
+.page-hero{min-height:62vh;display:flex;align-items:flex-end;padding-bottom:50px}
+.page-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg),#0008 70%)}
+.page-hero .wrap{position:relative;width:100%}.page-hero h1{font-size:clamp(4rem,14vw,10rem)}
+.stop{display:grid;grid-template-columns:150px 1fr 300px;gap:30px;padding:44px 0;border-top:1px solid var(--line);align-items:start}
+.stop .yr{font:2.2rem Anton,sans-serif;-webkit-text-stroke-width:1px}
+.stop h3{font-size:2.4rem}.stop .role{font-weight:600;margin:8px 0 10px}.stop ul{color:#c4c4c4;padding-left:18px}
+.stop .ph{aspect-ratio:4/3}
+@media(max-width:860px){.stop{grid-template-columns:1fr;gap:12px}}
+
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* accessibility states: Reduce Transparency / Increase Contrast get opaque controls; Reduce Motion stops repeating motion */
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){nav .logo,nav div,.btn.ghost{background:#1a1a1a;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:#fff9}body::before{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.ticker div{animation-duration:120s}.logos div{animation-duration:80s}}
