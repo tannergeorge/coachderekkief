@@ -78,7 +78,7 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .b1g{--x:29%;--y:52%;--w:36%;--a:2;--r:5deg;z-index:3}
 .sec{--x:55%;--y:6%;--w:25%;--a:1;--r:9deg;z-index:1}
 .cfp{--x:74%;--y:40%;--w:17%;--a:.77;--r:-7deg;z-index:4;background-size:auto 100%}/* cfp png is mostly transparent padding left/right; size by height */
-@media(max-width:760px){.leagues{aspect-ratio:.95}.nfl{--x:2%;--y:2%;--w:46%}.sec{--x:48%;--y:6%;--w:44%}.b1g{--x:4%;--y:46%;--w:66%}.cfp{--x:58%;--y:58%;--w:34%}}
+@media(max-width:760px){.leagues{aspect-ratio:1}.nfl{--x:6%;--y:9%;--w:38%}.sec{--x:52%;--y:8%;--w:40%}.b1g{--x:5%;--y:56%;--w:60%}.cfp{--x:66%;--y:46%;--w:28%}}
 
 /* social cards (content layer: no glass); hover fills with the platform color */
 .social{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
@@ -129,12 +129,27 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .path i::before{content:"";position:absolute;inset:17%;background:var(--img) center/contain no-repeat}
 .path a:not(:last-child)::after{content:"";position:absolute;top:calc(var(--s)/2);left:calc(100% + 6px);width:calc(var(--g) - 12px);height:2px;border-radius:2px;background:linear-gradient(90deg,#fff5,var(--hot))}
 .path a:hover i{transform:scale(1.12)}
-@media(max-width:560px){.path{--s:48px;--g:10px}}
+@media(max-width:560px){.path{--s:46px;--g:8px}.path a{font-size:.68rem;white-space:nowrap}.path a:not(:last-child)::after{left:100%;width:var(--g)}}
 @media(max-width:1000px){.stop{grid-template-columns:minmax(0,280px) 1fr 150px}}
-@media(max-width:760px){.stop{grid-template-columns:1fr;gap:20px}.player{width:min(220px,60%)}}
+@media(max-width:760px){.stop{grid-template-columns:1fr 36%;grid-template-areas:"plate player" "text text";gap:16px 12px;padding:28px 0}.stop .plate{grid-area:plate}.stop .player{grid-area:player;aspect-ratio:auto;align-self:stretch}.stop>div:not(.plate){grid-area:text}.stop h3{font-size:2rem}.stop .yr{font-size:1.5rem}.player figcaption{font-size:1rem;padding:10px 12px}}
 
 footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* phones: tighter rhythm, bigger name, side-by-side hero buttons, shorter cards, compact social rows */
+@media(max-width:640px){
+section{padding:64px 0}section h2{margin:6px 0 28px}
+.hero h1{font-size:clamp(4.5rem,24vw,13rem)}
+.hero p{font-size:1.05rem;margin:14px 0 22px}
+.hero .btn{width:calc(50% - 4px);justify-content:center;margin:0;padding:0 10px;font-size:.9rem}.hero .btn+.btn{margin-left:8px}
+.logos{margin-top:32px;padding:20px 0}
+.tile{aspect-ratio:4/3;padding:22px;border-radius:24px}.tile h3{font-size:2.1rem}
+.social a{flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;min-height:0;padding:20px 22px}
+.social svg{width:34px;height:34px;flex:none}.social b{font-size:1.7rem}
+.social a::after{top:50%;margin-top:-.8em;line-height:1.6}
+.page-hero{min-height:64svh}
+.hero .wrap,.page-hero .wrap{margin:auto auto 0}/* .wrap's margin:auto would center it vertically in the tall header */
+}
 
 /* accessibility states: Reduce Transparency / Increase Contrast get opaque controls; Reduce Motion stops repeating motion */
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){nav .logo,nav div,.btn.ghost{background:#1a1a1a;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:#fff9}body::before{display:none}}
