@@ -2,9 +2,10 @@
 
 Static HTML + one `style.css`. No build step: open `index.html` in a browser.
 
-- Pages: `index.html` (landing), `resume.html`. Recruiting + Unleashed PSA (training) pages are next; landing tiles link to placeholders.
+- Pages: `index.html` (landing), `resume.html`, `recruiting.html`. Unleashed PSA (training) page is next; its landing tile links to a placeholder.
+- Recruiting map: state silhouettes in `img/recruiting_imgs/state_shapes/` are generated from `state_outlines/` by `python3 img/recruiting_imgs/make_shapes.py` (numpy + ImageMagick).
 - Photos live in `img/`. Every photo is a `.ph` element with `style="--img:url(img/x.jpg)"`; a missing file shows a gray gradient with its filename, so the layout never breaks.
-- Resume facts come from public school bios; anything marked VERIFY needs Derek's confirmation.
+- Resume facts come from Derek's resume PDF; anything marked VERIFY needs Derek's confirmation.
 
 ## Ponytails (smallest thing that works; each tagged `ponytail:` in code)
 - Nav + footer copy-pasted per page → JS include or static-site generator past ~5 pages.

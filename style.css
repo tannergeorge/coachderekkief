@@ -99,7 +99,27 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .page-hero .wrap{position:relative;width:100%}.page-hero h1{font-size:clamp(4rem,14vw,10rem)}
 .stop{display:grid;grid-template-columns:minmax(0,340px) 1fr 190px;gap:clamp(24px,5vw,56px);padding:44px 0;border-top:1px solid var(--line);align-items:center}
 .stop .yr{font:1.9rem Anton,sans-serif;-webkit-text-stroke-width:1px;margin-bottom:6px}
-.stop h3{font-size:2.4rem}.stop .role{font-weight:600;margin:8px 0 10px}.stop ul{color:#c4c4c4;padding-left:18px}
+.stop h3{font-size:2.4rem}.stop .role{font-weight:600;margin:8px 0 0}
+/* job details: dates, one always-visible headline result, the rest behind a native disclosure (HIG layout.md: progressive disclosure) */
+.stop .when{color:var(--mute);font-size:.9rem;margin-bottom:16px}
+.stat{border-left:2px solid var(--hot);padding-left:14px;color:#c4c4c4;font-size:.95rem;line-height:1.5;max-width:52ch}
+.stat b{display:block;color:var(--fg)}
+.stop details{margin-top:8px;max-width:60ch}
+.stop summary{display:inline-flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;list-style:none;color:var(--mute);font-weight:600;font-size:.9rem;transition:color .2s}
+.stop summary::-webkit-details-marker{display:none}
+.stop summary::after{content:"";width:7px;height:7px;border:solid currentColor;border-width:0 2px 2px 0;transform:translateY(-2px) rotate(45deg);transition:transform .35s var(--ease)}
+.stop details[open] summary::after{transform:translateY(1px) rotate(-135deg)}
+.stop summary:hover,.stop details[open] summary{color:var(--fg)}
+.stop dl{display:grid;grid-template-columns:8.5em 1fr;gap:10px 18px;padding:6px 0 4px;font-size:.95rem;line-height:1.5}
+.stop dt{color:var(--mute);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding-top:.2em}
+.stop dd{margin:0;color:#c4c4c4}
+@media(max-width:560px){.stop dl{grid-template-columns:1fr;gap:2px}.stop dd+dt{margin-top:12px}}
+/* education + references: plain content layer, no cards */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px 40px;border-top:1px solid var(--line);padding-top:32px}
+.facts h3{font-size:1.7rem;margin-bottom:10px}.facts p{color:#c4c4c4}
+.refs{list-style:none;padding:32px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px 40px;border-top:1px solid var(--line);color:var(--mute);font-size:.95rem}
+.refs b{display:block;color:var(--fg);font-weight:600;font-size:1.05rem}
+.note{color:var(--mute);font-size:.85rem;margin-top:32px}
 /* team plate: logo on a sleek background in the team's own colors (white alt logos from img/resume_logos where available) (base gradient + color glow + sheen),
    with a large faint watermark of the logo bleeding off the corner. Logo layers are unrounded squares so nothing is cropped. */
 .plate{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:22px;background:linear-gradient(115deg,#0000 38%,#ffffff12 50%,#0000 62%),var(--team);box-shadow:inset 0 1px 0 #ffffff2e,inset 0 0 0 1px #ffffff14,0 22px 44px #0008;transition:transform .45s var(--ease)}
@@ -111,6 +131,7 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .t-ark{--team:radial-gradient(70% 60% at 0% 0%,#ffffff1f,#0000 60%),radial-gradient(90% 80% at 100% 100%,#0000008c,#0000 60%),linear-gradient(135deg,#9d2235,#4f0d18)}
 .t-ark::after{inset:15% 10%}/* wide hog: use more of the panel width */
 .t-tow{--team:radial-gradient(90% 80% at 100% 100%,#ffbb0080,#0000 60%),radial-gradient(60% 50% at 0% 0%,#ffffff1a,#0000 60%),linear-gradient(135deg,#1c1a14,#060504)}
+.t-mosu{--team:radial-gradient(70% 60% at 0% 0%,#ffffff1f,#0000 60%),radial-gradient(90% 80% at 100% 100%,#0000008c,#0000 60%),linear-gradient(135deg,#7a0010,#3a0007)}
 .t-bama{--team:radial-gradient(70% 60% at 0% 0%,#ffffff26,#0000 60%),radial-gradient(90% 80% at 100% 100%,#2b0509b3,#0000 60%),linear-gradient(135deg,#a31f36,#5a0d1a)}
 /* player he coached at that stop: portrait photo, name over a bottom fade */
 .player{margin:0;aspect-ratio:3/4;border-radius:20px;display:flex;align-items:flex-end;box-shadow:0 20px 40px #0007;transition:transform .45s var(--ease)}
@@ -129,9 +150,83 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .path i::before{content:"";position:absolute;inset:17%;background:var(--img) center/contain no-repeat}
 .path a:not(:last-child)::after{content:"";position:absolute;top:calc(var(--s)/2);left:calc(100% + 6px);width:calc(var(--g) - 12px);height:2px;border-radius:2px;background:linear-gradient(90deg,#fff5,var(--hot))}
 .path a:hover i{transform:scale(1.12)}
-@media(max-width:560px){.path{--s:46px;--g:8px}.path a{font-size:.68rem;white-space:nowrap}.path a:not(:last-child)::after{left:100%;width:var(--g)}}
+@media(max-width:560px){.path{--s:38px;--g:6px}.path a{font-size:.68rem;white-space:nowrap}.path a:not(:last-child)::after{left:100%;width:var(--g)}}
 @media(max-width:1000px){.stop{grid-template-columns:minmax(0,280px) 1fr 150px}}
 @media(max-width:760px){.stop{grid-template-columns:1fr 36%;grid-template-areas:"plate player" "text text";gap:16px 12px;padding:28px 0}.stop .plate{grid-area:plate}.stop .player{grid-area:player;aspect-ratio:auto;align-self:stretch}.stop>div:not(.plate){grid-area:text}.stop h3{font-size:2rem}.stop .yr{font-size:1.5rem}.player figcaption{font-size:1rem;padding:10px 12px}}
+
+/* recruiting: state silhouettes are white PNG masks (img/recruiting_imgs/state_shapes), so CSS fills them with any color */
+.sh{display:block;-webkit-mask:var(--shape) center/contain no-repeat;mask:var(--shape) center/contain no-repeat;background:linear-gradient(160deg,#fff,#8f8f8f)}
+.page-hero .lead{max-width:44ch;font-size:1.15rem;color:#e4e4e4;margin:16px 0 0}
+.jump{display:flex;gap:clamp(18px,4vw,44px);margin-top:34px}
+.jump a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.jump .sh{width:84px;height:64px;margin-bottom:10px;filter:drop-shadow(0 10px 18px #000c);transition:transform .35s var(--ease),background .3s}
+.jump a:hover .sh{transform:scale(1.1);background:var(--hot)}
+
+/* atlas: sticky map beside the territory chapters; the chapter crossing mid-screen lights its state */
+.atlas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(32px,5vw,72px);align-items:start}
+.map-col{position:sticky;top:84px}
+.map{position:relative;height:min(calc(100svh - 120px),820px);aspect-ratio:.664;max-width:100%;margin:auto}
+/* a state: dot-matrix fill + lime glow at the area he works (--fx/--fy/--fr; whole state by default); rim + glow via drop-shadow on the unmasked parent */
+.st{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);filter:drop-shadow(0 0 1px #fff9);transition:opacity .5s,filter .5s}
+.st::before{content:"";position:absolute;inset:0;-webkit-mask:var(--shape) 0 0/100% 100% no-repeat;mask:var(--shape) 0 0/100% 100% no-repeat;
+  background:radial-gradient(circle at var(--fx,50%) var(--fy,50%),#d4ff0059,#d4ff0014 var(--fr,75%),#0000 calc(var(--fr,75%) + 25%)),radial-gradient(circle,#ffffff4d 1.1px,#0000 1.7px) 0 0/7px 7px,#ffffff0f}
+.arcs{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.arcs path{fill:none;stroke:var(--hot);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 9;opacity:.4;animation:flow 1.6s linear infinite;transition:opacity .5s,stroke-width .3s}
+.arcs circle{fill:var(--hot);stroke:var(--hot);stroke-opacity:0;transform-box:fill-box;transform-origin:center;animation:ping 2.4s ease-out infinite;transition:transform .35s var(--ease)}
+.arcs circle:nth-of-type(3n+2){animation-delay:-.8s}.arcs circle:nth-of-type(3n){animation-delay:-1.6s}
+.arcs .home{fill:#fff;stroke:#fff;animation:none;stroke-opacity:.25;stroke-width:12}
+@keyframes flow{to{stroke-dashoffset:-16}}
+@keyframes ping{0%{stroke-width:0;stroke-opacity:.7}100%{stroke-width:34;stroke-opacity:0}}
+.arcs .hl{opacity:1;stroke-width:4.5}.arcs circle.hl{transform:scale(1.9)}
+/* active territory (set by the script): others dim, its arcs brighten */
+.map[data-on] .st{opacity:.35}
+.map[data-on=ohio] .ohio,.map[data-on=nova] .nova,.map[data-on=alabama] .alabama,.map[data-on=jax] .jax{opacity:1;filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 18px #d4ff0040)}
+.map[data-on] .arcs path:not(.hl){opacity:.12}
+.map[data-on=ohio] path.ohio,.map[data-on=nova] path.nova,.map[data-on=alabama] path.alabama,.map[data-on=jax] path.jax{opacity:.9}
+/* College Park: label above the white home dot */
+.cp{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(-100% - 14px));display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:.75rem;font-weight:600}
+.cp i{width:24px;height:24px;border-radius:50%;background:var(--img) center/66% no-repeat,#fff;box-shadow:0 6px 14px #0008}
+
+/* territory chapters */
+.terr{min-height:62vh;padding:44px 0 56px;border-top:1px solid var(--line);scroll-margin-top:80px}
+.terr:first-child{border:0;padding-top:0}
+.terr h3{font-size:clamp(3rem,7vw,5.2rem);margin:10px 0 16px;display:flex;align-items:center;gap:16px}
+.terr h3 .sh{display:none;width:52px;height:52px;flex:none}
+.lede{color:#c4c4c4;max-width:46ch}
+.schools{list-style:none;padding:0;margin-top:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:22px 14px;font-size:.9rem;line-height:1.35}
+.schools li{display:flex;flex-direction:column;gap:2px;cursor:default}
+.schools i{display:block;aspect-ratio:1;border-radius:22px;margin-bottom:10px;background:var(--img) center/var(--fit,70%) no-repeat,var(--tile,linear-gradient(#f6f6f3,#e3e3df));background-blend-mode:var(--blend,multiply);box-shadow:inset 0 0 0 1px #0000000d,0 14px 30px #0007;transition:transform .45s var(--ease)}
+.schools li:hover i{transform:translateY(-4px) scale(1.03)}
+.schools b{font-weight:600}.schools span{color:var(--mute);font-size:.8rem}
+
+/* players recruited: photo card; without a photo it shows the destination team's plate (.t-* from the resume) and logo */
+.recruits{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.recruit{position:relative;overflow:hidden;aspect-ratio:3/4;border-radius:24px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;background:var(--team,linear-gradient(135deg,#2a2a2a,#111));box-shadow:inset 0 1px 0 #ffffff2e,0 20px 40px #0007;transition:transform .45s var(--ease)}
+.recruit::before{content:"";position:absolute;inset:18% 22% 42%;background:var(--logo,none) center/contain no-repeat;filter:drop-shadow(0 12px 18px #0009)}
+.recruit::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000e,#0000 55%),var(--img,none) var(--pos,50% 25%)/cover}
+.recruit>*{position:relative;z-index:1}
+.recruit:hover{transform:translateY(-4px)}
+.recruit .stars{color:var(--hot);font-weight:700;font-size:.8rem;letter-spacing:.14em}
+.recruit b{font:400 1.9rem/.95 Anton,sans-serif;text-transform:uppercase}
+.recruit span:last-child{color:#cfcfcf;font-size:.85rem;line-height:1.4}
+
+/* press list: outlet · headline · date, one row per article */
+.news{list-style:none;padding:0;border-top:1px solid var(--line)}
+.news a{display:grid;grid-template-columns:11em 1fr auto;gap:8px 28px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--line);transition:color .2s}
+.news a b{font-weight:600;font-size:1.15rem}.news time{color:var(--mute);font-size:.85rem}
+.news a:hover b{color:var(--hot)}
+.news .empty{padding:44px 0;color:var(--mute);text-align:center;border-bottom:1px solid var(--line)}
+
+@media(max-width:899px){
+.atlas{grid-template-columns:1fr}.map-col{position:static}.map{height:auto;width:min(100%,460px)}
+.terr{min-height:0}.terr:first-child{border-top:1px solid var(--line);padding-top:44px}.terr h3 .sh{display:block}
+}
+@media(max-width:640px){
+.jump{gap:0;justify-content:space-between}.jump a{font-size:.72rem}.jump .sh{width:62px;height:48px}
+.schools{grid-template-columns:repeat(2,1fr)}.recruits{grid-template-columns:repeat(2,1fr);gap:10px}
+.recruit{padding:14px;border-radius:20px}.recruit b{font-size:1.35rem}.recruit span:last-child{font-size:.75rem}
+.news a{grid-template-columns:1fr auto}.news a .tag{grid-column:1/-1}
+}
 
 footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -153,4 +248,4 @@ section{padding:64px 0}section h2{margin:6px 0 28px}
 
 /* accessibility states: Reduce Transparency / Increase Contrast get opaque controls; Reduce Motion stops repeating motion */
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){nav .logo,nav div,.btn.ghost{background:#1a1a1a;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:#fff9}body::before{display:none}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}.ticker div{animation-duration:120s}.logos div{animation-duration:80s}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.arcs *{animation:none!important}.ticker div{animation-duration:120s}.logos div{animation-duration:80s}}
