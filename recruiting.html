@@ -4,10 +4,10 @@
 <link rel="stylesheet" href="style.css"></head><body>
 <nav><a class="logo" href="index.html">COACHKIEF<b>.</b>COM</a><div><a href="index.html">Home</a><a href="resume.html">Resume</a><a href="recruiting.html" class="on">Recruiting</a><a href="index.html#training">Training</a></div></nav>
 
-<header class="page-hero ph" style="--img:url(img/recruiting_imgs/header.jpg);--pos:62% 4%"><div class="wrap">
+<header class="page-hero ph" style="--img:url(img/recruiting_imgs/header.webp);--pos:62% 4%"><div class="wrap">
   <h1>Recruiting</h1>
   <p class="lead">Building relationships with top players and programs across Ohio, Alabama, Northern Virginia, and Jacksonville</p>
-  <!-- territory jump row: each state's silhouette links to its chapter below (shapes: img/recruiting_imgs/state_shapes, made by make_shapes.py) -->
+  <!-- territory jump row: each state's silhouette links to its chapter below (shapes: img/recruiting_imgs/state_shapes, made by make_web_images.py) -->
   <div class="jump">
     <a href="#ohio"><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/ohio.png)"></i>Ohio</a>
     <a href="#nova"><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/virginia.png)"></i>N. Virginia</a>
@@ -22,12 +22,13 @@
     <!-- map: the four states at true relative position and size, every school pinned, each pin's arc running to College Park.
          Positions come from latitude/longitude (x = lon offset × cos(lat)); --x/--y/--w/--h place a state, as % of the map.
          Adding a school: add its <li data-s> below plus a matching <path> and <circle> here (same data-s), pinned by eye.
-         Scrolling a chapter into view lights its state (script at the bottom); hovering a school lights its pin. -->
+         Scrolling a chapter into view lights its state, hovering a school lights + labels its pin, clicking a state jumps to it (script at the bottom).
+         Animation only runs while the map is on screen, and pins only pulse for the lit territory (keeps scrolling smooth). -->
     <div class="map-col"><div class="map" role="img" aria-label="Map of Ohio, Virginia, Alabama and Florida with each partner school pinned and connected to College Park, Maryland">
-      <div class="st ohio" style="--x:32.3%;--y:2.8%;--w:27.9%;--h:20.1%;--shape:url(img/recruiting_imgs/state_shapes/ohio.png)"></div>
-      <div class="st nova" style="--x:39.3%;--y:17%;--w:56.4%;--h:16.7%;--fx:76%;--fy:16%;--fr:22%;--shape:url(img/recruiting_imgs/state_shapes/virginia.png)"></div>
-      <div class="st alabama" style="--x:4.2%;--y:42.1%;--w:25.6%;--h:26.8%;--shape:url(img/recruiting_imgs/state_shapes/alabama.png)"></div>
-      <div class="st jax" style="--x:8.2%;--y:64.7%;--w:57.1%;--h:32.5%;--fx:79%;--fy:14%;--fr:24%;--shape:url(img/recruiting_imgs/state_shapes/florida.png)"></div>
+      <a class="st ohio" href="#ohio" tabindex="-1" style="--x:32.3%;--y:2.8%;--w:27.9%;--h:20.1%;--shape:url(img/recruiting_imgs/state_shapes/ohio.png)"></a>
+      <a class="st nova" href="#nova" tabindex="-1" style="--x:39.3%;--y:17%;--w:56.4%;--h:16.7%;--fx:76%;--fy:16%;--fr:22%;--shape:url(img/recruiting_imgs/state_shapes/virginia.png)"></a>
+      <a class="st alabama" href="#alabama" tabindex="-1" style="--x:4.2%;--y:42.1%;--w:25.6%;--h:26.8%;--shape:url(img/recruiting_imgs/state_shapes/alabama.png)"></a>
+      <a class="st jax" href="#jax" tabindex="-1" style="--x:8.2%;--y:64.7%;--w:57.1%;--h:32.5%;--fx:79%;--fy:14%;--fr:24%;--shape:url(img/recruiting_imgs/state_shapes/florida.png)"></a>
       <svg class="arcs" viewBox="0 0 1000 1506" preserveAspectRatio="none" aria-hidden="true">
         <path class="ohio" data-s="elder" d="M339 286Q591 181 839 296"/><path class="ohio" data-s="moeller" d="M352 278Q600 180 839 296"/><path class="ohio" data-s="stx" d="M343 277Q595 177 839 296"/><path class="ohio" data-s="princeton" d="M349 272Q599 176 839 296"/>
         <path class="ohio" data-s="pickn" d="M457 220Q665 174 839 296"/><path class="ohio" data-s="hoban" d="M538 120Q728 142 839 296"/><path class="ohio" data-s="massillon" d="M537 143Q722 153 839 296"/><path class="ohio" data-s="sted" d="M519 85Q726 120 839 296"/>
@@ -41,6 +42,7 @@
         <circle class="alabama" data-s="spain" cx="168" cy="768" r="9"/><circle class="alabama" data-s="hoover" cx="162" cy="773" r="9"/><circle class="alabama" data-s="russell" cx="223" cy="810" r="9"/><circle class="jax" data-s="bolles" cx="532" cy="1039" r="9"/>
         <circle class="home" cx="839" cy="296" r="15"/>
       </svg>
+      <span class="pin-label" hidden></span>
       <span class="cp" style="--x:83.9%;--y:19.7%"><i style="--img:url(img/maryland_logo.svg)"></i>College Park</span>
     </div></div>
 
@@ -51,63 +53,66 @@
         <p class="tag">Cincinnati · Columbus · Northeast Ohio</p><h3><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/ohio.png)"></i>Ohio</h3>
         <p class="lede">Home ground. Derek is a Cincinnati native and has recruited Ohio at every stop: Maryland, Arkansas and Towson.</p>
         <ul class="schools">
-          <li data-s="moeller"><i style="--img:url(img/recruiting_imgs/school_logos/archbishop_moeller.png)"></i><b>Archbishop Moeller</b><span>Cincinnati</span></li>
-          <li data-s="elder"><i style="--img:url(img/recruiting_imgs/school_logos/elder.jpg);--fit:80%"></i><b>Elder</b><span>Cincinnati</span></li>
-          <li data-s="stx"><i style="--img:url(img/recruiting_imgs/school_logos/st_xavier.webp);--fit:76%"></i><b>St. Xavier</b><span>Cincinnati</span></li>
-          <li data-s="princeton"><i style="--img:url(img/recruiting_imgs/school_logos/princeton.jpg);--fit:62%"></i><b>Princeton</b><span>Cincinnati</span></li>
-          <li data-s="pickn"><i style="--img:url(img/recruiting_imgs/school_logos/pickerington_north.png)"></i><b>Pickerington North</b><span>Pickerington</span></li>
-          <li data-s="hoban"><i style="--img:url(img/recruiting_imgs/school_logos/archbishop_hoban.jpg);--fit:84%"></i><b>Archbishop Hoban</b><span>Akron</span></li>
-          <li data-s="massillon"><i style="--img:url(img/recruiting_imgs/school_logos/massilon-washington.png);--fit:74%"></i><b>Massillon Washington</b><span>Massillon</span></li>
-          <li data-s="sted"><i style="--img:url(img/recruiting_imgs/school_logos/st_edward.png);--fit:80%"></i><b>St. Edward</b><span>Lakewood</span></li>
+          <li data-s="moeller"><i style="--img:url(img/recruiting_imgs/school_logos_web/archbishop_moeller.webp)"></i><b>Archbishop Moeller</b><span>Cincinnati</span></li>
+          <li data-s="elder"><i style="--img:url(img/recruiting_imgs/school_logos_web/elder.webp);--fit:80%"></i><b>Elder</b><span>Cincinnati</span></li>
+          <li data-s="stx"><i style="--img:url(img/recruiting_imgs/school_logos_web/st_xavier.webp);--fit:76%"></i><b>St. Xavier</b><span>Cincinnati</span></li>
+          <li data-s="princeton"><i style="--img:url(img/recruiting_imgs/school_logos_web/princeton.webp);--fit:62%"></i><b>Princeton</b><span>Cincinnati</span></li>
+          <li data-s="pickn"><i style="--img:url(img/recruiting_imgs/school_logos_web/pickerington_north.webp)"></i><b>Pickerington North</b><span>Pickerington</span></li>
+          <li data-s="hoban"><i style="--img:url(img/recruiting_imgs/school_logos_web/archbishop_hoban.webp);--fit:84%"></i><b>Archbishop Hoban</b><span>Akron</span></li>
+          <li data-s="massillon"><i style="--img:url(img/recruiting_imgs/school_logos_web/massilon-washington.webp);--fit:74%"></i><b>Massillon Washington</b><span>Massillon</span></li>
+          <li data-s="sted"><i style="--img:url(img/recruiting_imgs/school_logos_web/st_edward.webp);--fit:80%"></i><b>St. Edward</b><span>Lakewood</span></li>
         </ul>
       </article>
       <article class="terr" id="nova">
         <p class="tag">Loudoun · Fairfax</p><h3><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/virginia.png)"></i>Northern Virginia</h3>
         <p class="lede">Maryland’s backyard, minutes from College Park, with prep academies built to send players to the next level.</p>
         <ul class="schools">
-          <li data-s="loudoun"><i style="--img:url(img/recruiting_imgs/school_logos/loudoun_sports_academy.jpg);--fit:100%;--tile:#000;--blend:normal"></i><b>Loudoun Sports Academy</b><span>Loudoun County</span></li>
-          <li data-s="stjames"><i style="--img:url(img/recruiting_imgs/school_logos/st_james_academy.webp);--fit:76%"></i><b>St. James Academy</b><span>Springfield</span></li>
+          <li data-s="loudoun"><i style="--img:url(img/recruiting_imgs/school_logos_web/loudoun_sports_academy.webp);--fit:100%;--tile:#000;--blend:normal"></i><b>Loudoun Sports Academy</b><span>Loudoun County</span></li>
+          <li data-s="stjames"><i style="--img:url(img/recruiting_imgs/school_logos_web/st_james_academy.webp);--fit:76%"></i><b>St. James Academy</b><span>Springfield</span></li>
         </ul>
       </article>
       <article class="terr" id="alabama">
         <p class="tag">Birmingham Metro · Central Alabama</p><h3><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/alabama.png)"></i>Alabama</h3>
         <p class="lede">Where Derek played five seasons and won two national championships. He knows what an SEC-ready player looks like.</p>
         <ul class="schools">
-          <li data-s="hoover"><i style="--img:url(img/recruiting_imgs/school_logos/hoover.webp);--fit:62%"></i><b>Hoover</b><span>Hoover</span></li>
-          <li data-s="thompson"><i style="--img:url(img/recruiting_imgs/school_logos/thompson.svg);--fit:84%"></i><b>Thompson</b><span>Alabaster</span></li>
-          <li data-s="hewitt"><i style="--img:url(img/recruiting_imgs/school_logos/hewitt-trussville.webp);--fit:78%"></i><b>Hewitt-Trussville</b><span>Trussville</span></li>
-          <li data-s="clay"><i style="--img:url(img/recruiting_imgs/school_logos/clay-chalkville.png);--fit:80%"></i><b>Clay-Chalkville</b><span>Pinson</span></li>
-          <li data-s="spain"><i style="--img:url(img/recruiting_imgs/school_logos/spain_park.png);--fit:74%"></i><b>Spain Park</b><span>Hoover</span></li>
-          <li data-s="russell"><i style="--img:url(img/recruiting_imgs/school_logos/benjamin_russell.png);--fit:74%"></i><b>Benjamin Russell</b><span>Alexander City</span></li>
+          <li data-s="hoover"><i style="--img:url(img/recruiting_imgs/school_logos_web/hoover.webp);--fit:62%"></i><b>Hoover</b><span>Hoover</span></li>
+          <li data-s="thompson"><i style="--img:url(img/recruiting_imgs/school_logos_web/thompson.webp);--fit:84%"></i><b>Thompson</b><span>Alabaster</span></li>
+          <li data-s="hewitt"><i style="--img:url(img/recruiting_imgs/school_logos_web/hewitt-trussville.webp);--fit:78%"></i><b>Hewitt-Trussville</b><span>Trussville</span></li>
+          <li data-s="clay"><i style="--img:url(img/recruiting_imgs/school_logos_web/clay-chalkville.webp);--fit:80%"></i><b>Clay-Chalkville</b><span>Pinson</span></li>
+          <li data-s="spain"><i style="--img:url(img/recruiting_imgs/school_logos_web/spain_park.webp);--fit:74%"></i><b>Spain Park</b><span>Hoover</span></li>
+          <li data-s="russell"><i style="--img:url(img/recruiting_imgs/school_logos_web/benjamin_russell.webp);--fit:74%"></i><b>Benjamin Russell</b><span>Alexander City</span></li>
         </ul>
       </article>
       <article class="terr" id="jax">
         <p class="tag">Northeast Florida</p><h3><i class="sh" style="--shape:url(img/recruiting_imgs/state_shapes/florida.png)"></i>Jacksonville</h3>
         <p class="lede">One of the deepest talent pools in the Southeast, a short flight from College Park.</p>
         <ul class="schools">
-          <li data-s="bolles"><i style="--img:url(img/recruiting_imgs/school_logos/bolles_school.webp);--fit:84%"></i><b>The Bolles School</b><span>Jacksonville</span></li>
+          <li data-s="bolles"><i style="--img:url(img/recruiting_imgs/school_logos_web/bolles_school.webp);--fit:84%"></i><b>The Bolles School</b><span>Jacksonville</span></li>
         </ul>
       </article>
     </div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
+<section class="lazy" style="padding-top:0"><div class="wrap">
   <p class="tag">Recruited by Derek</p><h2>Players<br>Recruited</h2>
-  <!-- one card per player; names and schools from Derek's resume PDF. VERIFY positions + high schools for the 2026 signees.
-       Photo: save it in img/players/ and set --img (--pos to move the crop). Until then the card shows the team's plate:
-       --team via a .t-* class from style.css (resume plates) and --logo = that team's white logo. -->
+  <!-- one card per player, newest class first. 2026 names from Derek's resume PDF; 2027 commits + positions from recruiting coverage (Nov 2026).
+       Top line = stars · position · class; line under the name = high school (state). VERIFY with Derek: Sullivan's school (St. James per his June 2026 commitment coverage; North Stafford as a junior).
+       Photo: drop the original in img/recruiting_imgs/commits/, run make_web_images.py, and point --img at commits_web/<name>.webp (--pos moves the crop).
+       No photo: the card shows the team's plate instead (--team via a .t-* class from style.css, --logo = that team's white logo). -->
   <div class="recruits">
-    <article class="recruit t-md" style="--img:url(img/players/jamarcus_whyce.webp);--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★★</span><b>Jamarcus Whyce</b><span>Class of 2026 · Signed with Maryland</span></article>
-    <article class="recruit t-md" style="--img:url(img/players/nathan_bernhard.webp);--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★</span><b>Nathan Bernhard</b><span>Class of 2026 · Signed with Maryland</span></article>
-    <article class="recruit t-md" style="--img:url(img/players/josiah_teasley.webp);--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★</span><b>Josiah Teasley</b><span>Class of 2026 · Signed with Maryland</span></article>
-    <article class="recruit t-md" style="--img:url(img/players/tank_booker.webp);--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">DT</span><b>Tank Booker</b><span>Winton Woods HS → Maryland · Recruited at Arkansas</span></article>
-    <article class="recruit" style="--img:url(img/players/jaheim_thomas.webp)"><span class="stars">LB</span><b>Jaheim Thomas</b><span>Princeton HS → Cincinnati · Recruited at Arkansas</span></article>
-    <article class="recruit t-tow" style="--img:url(img/players/dakendall_james.webp);--pos:45% 30%;--logo:url(img/towson_logo.webp)"><span class="stars">WR</span><b>Da’Kendall James</b><span>Towson · 2022 team leader in receiving yards</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/jamarcus_whyce.webp);--pos:62% 40%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★★ · DL · 2026</span><b>Jamarcus Whyce</b><span>Trotwood-Madison (OH)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/jayden_kitchens.webp);--pos:50% 30%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · WR · 2026</span><b>Jayden Kitchens</b><span>St. James Academy (VA)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/nathan_bernhard.webp);--pos:80% 40%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · QB · 2026</span><b>Nathan Bernhard</b><span>Ashland (OH)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/josiah_teasley.webp);--pos:50% 25%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · WR · 2026</span><b>Josiah Teasley</b><span>St. James Academy (VA)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/kenaz_sullivan.webp);--pos:50% 30%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★★ · DB · 2027</span><b>Kenaz Sullivan</b><span>St. James Academy (VA)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/levi_babin.webp);--pos:50% 30%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · ATH · 2027</span><b>Levi Babin</b><span>Episcopal (VA)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/kyren_caldwell.webp);--pos:50% 25%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · WR · 2027</span><b>Kyren Caldwell</b><span>Columbia (FL)</span></article>
+    <article class="recruit t-md" style="--img:url(img/recruiting_imgs/commits_web/mason_mcclure.webp);--pos:50% 35%;--logo:url(img/resume_logos/maryland_white.svg)"><span class="stars">★★★ · WR · 2027</span><b>Mason McClure</b><span>Thompson (AL)</span></article>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
+<section class="lazy" style="padding-top:0"><div class="wrap">
   <p class="tag">Press</p><h2>In The<br>News</h2>
   <!-- articles: one <li> per story, newest first. Template:
        <li><a href="https://…" target="_blank" rel="noopener"><span class="tag">Outlet</span><b>Headline of the article</b><time>Mon YYYY</time></a></li>
@@ -120,13 +125,20 @@
 <footer><div class="wrap"><span>© Coach Derek Kief</span><span>Cincinnati, OH · Coach · Recruiter · Trainer</span></div></footer>
 
 <script>
-// hovering a school lights its pin + arc on the map
-const map = document.querySelector('.map');
+const map = document.querySelector('.map'), label = map.querySelector('.pin-label');
+// hovering a school lights its pin + arc and labels the pin on the map
 document.querySelectorAll('.schools [data-s]').forEach(li => {
-  const hits = map.querySelectorAll(`[data-s="${li.dataset.s}"]`);
-  li.addEventListener('pointerenter', () => hits.forEach(e => e.classList.add('hl')));
-  li.addEventListener('pointerleave', () => hits.forEach(e => e.classList.remove('hl')));
+  const hits = map.querySelectorAll(`[data-s="${li.dataset.s}"]`), pin = map.querySelector(`circle[data-s="${li.dataset.s}"]`);
+  li.addEventListener('pointerenter', () => {
+    hits.forEach(e => e.classList.add('hl'));
+    label.textContent = li.querySelector('b').textContent;
+    label.style.left = pin.getAttribute('cx') / 10 + '%'; label.style.top = pin.getAttribute('cy') / 15.06 + '%';
+    label.hidden = false;
+  });
+  li.addEventListener('pointerleave', () => { hits.forEach(e => e.classList.remove('hl')); label.hidden = true; });
 });
+// animate only while the map is on screen
+new IntersectionObserver(([e]) => map.classList.toggle('live', e.isIntersecting)).observe(map);
 // side-by-side layout only: the chapter crossing mid-screen lights its state (the map is sticky beside it)
 if (matchMedia('(min-width:900px)').matches) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) map.dataset.on = e.target.id }), { rootMargin: '-45% 0px -45% 0px' });

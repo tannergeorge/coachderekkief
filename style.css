@@ -1,6 +1,7 @@
 /* ponytail: one hand-written stylesheet, no framework/build; split per page if it passes ~400 lines */
 :root{--bg:#0a0a0a;--fg:#f4f4f4;--mute:#a3a3a3;--line:#ffffff1a;--hot:#d4ff00;--ease:cubic-bezier(.3,1.6,.5,1);--sys:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
 *{box-sizing:border-box;margin:0}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}/* in-page jumps (map states, territory row, resume path) glide */
 body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--sys);-webkit-font-smoothing:antialiased}
 a,button{color:inherit;text-decoration:none;font:inherit}
 :focus-visible{outline:2px solid var(--hot);outline-offset:3px;border-radius:999px}
@@ -166,25 +167,33 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .atlas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(32px,5vw,72px);align-items:start}
 .map-col{position:sticky;top:84px}
 .map{position:relative;height:min(calc(100svh - 120px),820px);aspect-ratio:.664;max-width:100%;margin:auto}
-/* a state: dot-matrix fill + lime glow at the area he works (--fx/--fy/--fr; whole state by default); rim + glow via drop-shadow on the unmasked parent */
-.st{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);filter:drop-shadow(0 0 1px #fff9);transition:opacity .5s,filter .5s}
+/* a state: dot-matrix fill + lime glow at the area he works (--fx/--fy/--fr; whole state by default); rim via drop-shadow on the unmasked parent.
+   Perf: mask + filter are painted once and never animated; lighting a state only changes opacity, which the GPU handles */
+.st{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);filter:drop-shadow(0 0 1px #fff9);will-change:opacity;transition:opacity .4s}
+.st.ohio,.st.alabama{z-index:1}/* boxes overlap: the smaller state wins clicks */
 .st::before{content:"";position:absolute;inset:0;-webkit-mask:var(--shape) 0 0/100% 100% no-repeat;mask:var(--shape) 0 0/100% 100% no-repeat;
   background:radial-gradient(circle at var(--fx,50%) var(--fy,50%),#d4ff0059,#d4ff0014 var(--fr,75%),#0000 calc(var(--fr,75%) + 25%)),radial-gradient(circle,#ffffff4d 1.1px,#0000 1.7px) 0 0/7px 7px,#ffffff0f}
-.arcs{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.arcs path{fill:none;stroke:var(--hot);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 9;opacity:.4;animation:flow 1.6s linear infinite;transition:opacity .5s,stroke-width .3s}
-.arcs circle{fill:var(--hot);stroke:var(--hot);stroke-opacity:0;transform-box:fill-box;transform-origin:center;animation:ping 2.4s ease-out infinite;transition:transform .35s var(--ease)}
+/* arcs + pins: own GPU layer (will-change) so their animation repaints only this SVG, not the masked states under it.
+   Animation runs only while the map is on screen (.live); pins pulse only for the lit territory (all of them on phones) */
+.arcs{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none;will-change:transform}
+.arcs path{fill:none;stroke:var(--hot);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 9;opacity:.4;animation:flow 1.6s linear infinite paused;transition:opacity .4s}
+.map.live .arcs path{animation-play-state:running}
+.arcs circle{fill:var(--hot);stroke:var(--hot);stroke-opacity:0;transform-box:fill-box;transform-origin:center;animation:none 2.4s ease-out infinite;transition:transform .35s var(--ease)}
 .arcs circle:nth-of-type(3n+2){animation-delay:-.8s}.arcs circle:nth-of-type(3n){animation-delay:-1.6s}
-.arcs .home{fill:#fff;stroke:#fff;animation:none;stroke-opacity:.25;stroke-width:12}
+.map.live:not([data-on]) circle:not(.home),.map.live[data-on=ohio] circle.ohio,.map.live[data-on=nova] circle.nova,.map.live[data-on=alabama] circle.alabama,.map.live[data-on=jax] circle.jax{animation-name:ping}
+.arcs .home{fill:#fff;stroke:#fff;stroke-opacity:.25;stroke-width:12}
 @keyframes flow{to{stroke-dashoffset:-16}}
 @keyframes ping{0%{stroke-width:0;stroke-opacity:.7}100%{stroke-width:34;stroke-opacity:0}}
 .arcs .hl{opacity:1;stroke-width:4.5}.arcs circle.hl{transform:scale(1.9)}
-/* active territory (set by the script): others dim, its arcs brighten */
+/* active territory (set by the script): others dim, its arcs brighten; hovering any state lifts it (click jumps to its chapter) */
 .map[data-on] .st{opacity:.35}
-.map[data-on=ohio] .ohio,.map[data-on=nova] .nova,.map[data-on=alabama] .alabama,.map[data-on=jax] .jax{opacity:1;filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 18px #d4ff0040)}
+.map[data-on=ohio] .st.ohio,.map[data-on=nova] .st.nova,.map[data-on=alabama] .st.alabama,.map[data-on=jax] .st.jax,.map .st:hover{opacity:1}
 .map[data-on] .arcs path:not(.hl){opacity:.12}
 .map[data-on=ohio] path.ohio,.map[data-on=nova] path.nova,.map[data-on=alabama] path.alabama,.map[data-on=jax] path.jax{opacity:.9}
+/* school name over its pin while its tile is hovered */
+.pin-label{position:absolute;z-index:3;transform:translate(-50%,calc(-100% - 12px));padding:5px 11px;border-radius:999px;background:#fff;color:#000;font-size:.75rem;font-weight:600;white-space:nowrap;pointer-events:none;box-shadow:0 6px 16px #0009}
 /* College Park: label above the white home dot */
-.cp{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(-100% - 14px));display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:.75rem;font-weight:600}
+.cp{position:absolute;z-index:3;left:var(--x);top:var(--y);transform:translate(-50%,calc(-100% - 14px));display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:.75rem;font-weight:600}
 .cp i{width:24px;height:24px;border-radius:50%;background:var(--img) center/66% no-repeat,#fff;box-shadow:0 6px 14px #0008}
 
 /* territory chapters */
@@ -196,7 +205,7 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .schools{list-style:none;padding:0;margin-top:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:22px 14px;font-size:.9rem;line-height:1.35}
 .schools li{display:flex;flex-direction:column;gap:2px;cursor:default}
 .schools i{display:block;aspect-ratio:1;border-radius:22px;margin-bottom:10px;background:var(--img) center/var(--fit,70%) no-repeat,var(--tile,linear-gradient(#f6f6f3,#e3e3df));background-blend-mode:var(--blend,multiply);box-shadow:inset 0 0 0 1px #0000000d,0 14px 30px #0007;transition:transform .45s var(--ease)}
-.schools li:hover i{transform:translateY(-4px) scale(1.03)}
+.schools li:hover i{transform:translateY(-4px) scale(1.03)}.schools li:active i{transform:scale(.97)}
 .schools b{font-weight:600}.schools span{color:var(--mute);font-size:.8rem}
 
 /* players recruited: photo card; without a photo it shows the destination team's plate (.t-* from the resume) and logo */
@@ -205,10 +214,13 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 .recruit::before{content:"";position:absolute;inset:18% 22% 42%;background:var(--logo,none) center/contain no-repeat;filter:drop-shadow(0 12px 18px #0009)}
 .recruit::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#000e,#0000 55%),var(--img,none) var(--pos,50% 25%)/cover}
 .recruit>*{position:relative;z-index:1}
-.recruit:hover{transform:translateY(-4px)}
+.recruit:hover{transform:translateY(-4px)}.recruit:active{transform:scale(.98)}
 .recruit .stars{color:var(--hot);font-weight:700;font-size:.8rem;letter-spacing:.14em}
 .recruit b{font:400 1.9rem/.95 Anton,sans-serif;text-transform:uppercase}
 .recruit span:last-child{color:#cfcfcf;font-size:.85rem;line-height:1.4}
+
+/* sections below the map: skip layout + paint (and their images) until scrolled near */
+.lazy{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 
 /* press list: outlet · headline · date, one row per article */
 .news{list-style:none;padding:0;border-top:1px solid var(--line)}
@@ -224,7 +236,7 @@ section h2{font-size:clamp(2.8rem,8vw,5.5rem);margin:10px 0 44px}
 @media(max-width:640px){
 .jump{gap:0;justify-content:space-between}.jump a{font-size:.72rem}.jump .sh{width:62px;height:48px}
 .schools{grid-template-columns:repeat(2,1fr)}.recruits{grid-template-columns:repeat(2,1fr);gap:10px}
-.recruit{padding:14px;border-radius:20px}.recruit b{font-size:1.35rem}.recruit span:last-child{font-size:.75rem}
+.recruit{padding:12px;border-radius:20px}.recruit b{font-size:1.35rem}.recruit span:last-child{font-size:.72rem;line-height:1.3}.recruit .stars{font-size:.68rem;letter-spacing:.04em;white-space:nowrap}
 .news a{grid-template-columns:1fr auto}.news a .tag{grid-column:1/-1}
 }
 
